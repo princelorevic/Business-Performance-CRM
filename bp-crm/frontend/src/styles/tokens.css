@@ -1,0 +1,40 @@
+/* Design tokens. Values are space-separated RGB triplets so Tailwind can apply opacity. */
+:root,
+:root[data-theme='light'] {
+  --bg: 246 247 249;
+  --surface: 255 255 255;
+  --surface-2: 241 243 246;
+  --border: 223 227 233;
+  --text: 17 24 39;
+  --muted: 100 110 126;
+  --accent: 37 99 235;
+  --accent-fg: 255 255 255;
+  --accent-soft: 232 240 254;
+  --success: 22 128 74;   --success-soft: 226 244 234;
+  --warning: 180 83 9;    --warning-soft: 253 242 222;
+  --danger: 200 38 38;    --danger-soft: 253 232 232;
+  --info: 3 105 161;      --info-soft: 224 242 252;
+  --shadow-card: 0 1px 2px rgb(16 24 40 / 0.05), 0 1px 3px rgb(16 24 40 / 0.06);
+  --shadow-pop: 0 12px 32px rgb(16 24 40 / 0.16);
+  /* charts */
+  --chart-1: #2563eb; --chart-2: #0d9488; --chart-3: #d97706; --chart-4: #7c3aed; --chart-5: #db2777; --chart-grid: #e5e7eb;
+}
+
+:root[data-theme='dark'] {
+  --bg: 12 17 27;
+  --surface: 19 26 40;
+  --surface-2: 27 36 53;
+  --border: 42 54 75;
+  --text: 232 236 243;
+  --muted: 148 160 180;
+  --accent: 96 150 255;
+  --accent-fg: 8 14 28;
+  --accent-soft: 28 44 79;
+  --success: 74 201 130;  --success-soft: 20 52 38;
+  --warning: 240 178 80;  --warning-soft: 58 44 20;
+  --danger: 248 113 113;  --danger-soft: 66 28 32;
+  --info: 98 188 240;     --info-soft: 18 46 64;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-pop: 0 16px 40px rgb(0 0 0 / 0.55);
+  --chart-1: #6ea2ff; --chart-2: #2dd4bf; --chart-3: #fbbf24; --chart-4: #a78bfa; --chart-5: #f472b6; --chart-grid: #2a364b;
+}
