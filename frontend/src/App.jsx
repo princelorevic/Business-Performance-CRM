@@ -15,14 +15,25 @@ import { ReportsPage } from './pages/ReportsPage.jsx';
 import { AuditPage } from './pages/AuditPage.jsx';
 import { TeamPage } from './pages/TeamPage.jsx';
 import { SubscriptionPage } from './pages/SubscriptionPage.jsx';
+import { LandingPage } from './pages/LandingPage.jsx';
+import { useAuth } from './api/AuthContext.jsx';
+import { Spinner } from './components/ui/Feedback.jsx';
+
+// Public home: visitors see the landing page, signed-in users go straight to their dashboard.
+function Home() {
+  const { session, loading } = useAuth();
+  if (loading) return <Spinner label="Loading" />;
+  return session ? <Navigate to="/dashboard" replace /> : <LandingPage />;
+}
 
 export function App() {
   return (
     <Routes>
+      <Route path="/" element={<Home />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route element={<RequireAuth><AppLayout /></RequireAuth>}>
-        <Route index element={<Guard perm="dashboard:read"><DashboardPage /></Guard>} />
+        <Route path="dashboard" element={<Guard perm="dashboard:read"><DashboardPage /></Guard>} />
         <Route path="customers" element={<Guard perm="customers:read"><CustomersPage /></Guard>} />
         <Route path="leads" element={<Guard perm="leads:read"><LeadsPage /></Guard>} />
         <Route path="pipeline" element={<Guard perm="opportunities:read"><PipelinePage /></Guard>} />

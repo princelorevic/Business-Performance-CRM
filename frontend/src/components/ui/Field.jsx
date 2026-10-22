@@ -1,4 +1,5 @@
-import { useId } from 'react';
+import { useId, useState } from 'react';
+import { Icon } from './Icon.jsx';
 
 // Label + control + error wired together for screen readers.
 export function Field({ label, error, hint, children, required }) {
@@ -31,3 +32,27 @@ export const SelectField = ({ label, error, options, required, placeholder, ...p
 export const TextAreaField = ({ label, error, ...props }) => (
   <Field label={label} error={error}>{(a) => <textarea rows={3} {...a} {...props} />}</Field>
 );
+
+// Password input with a show/hide toggle. The toggle is a real button (keyboard reachable,
+// announced with its pressed state) and never changes autocomplete behaviour.
+export function PasswordField({ label, error, hint, required, ...props }) {
+  const [shown, setShown] = useState(false);
+  return (
+    <Field label={label} error={error} hint={hint} required={required}>
+      {(a) => (
+        <div className="relative">
+          <input {...a} {...props} type={shown ? 'text' : 'password'} required={required} className={`${a.className} pr-11`} />
+          <button
+            type="button"
+            onClick={() => setShown((s) => !s)}
+            aria-label={shown ? 'Hide password' : 'Show password'}
+            aria-pressed={shown}
+            className="absolute inset-y-0 right-0 flex w-11 items-center justify-center rounded-r-lg text-muted hover:text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          >
+            <Icon name={shown ? 'eyeOff' : 'eye'} className="h-5 w-5" />
+          </button>
+        </div>
+      )}
+    </Field>
+  );
+}

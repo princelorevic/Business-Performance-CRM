@@ -26,6 +26,10 @@ const PATHS = {
   arrowDown: 'M12 5v14m6-6-6 6-6-6',
   chevronLeft: 'M15 5l-7 7 7 7',
   chevronRight: 'M9 5l7 7-7 7',
+  eye: 'M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12zM12 15a3 3 0 100-6 3 3 0 000 6z',
+  eyeOff: 'M3 3l18 18M10.6 6.1A9.8 9.8 0 0112 6c6.5 0 10 6 10 6a17 17 0 01-3.2 3.9M6.6 6.7C3.7 8.4 2 12 2 12s3.5 6 10 6c1.6 0 3-.4 4.2-1M9.9 9.9a3 3 0 004.2 4.2',
+  mail: 'M3 6h18v12H3zM3 7l9 6 9-6',
+  phone: 'M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z',
 };
 
 export function Icon({ name, className = 'h-5 w-5' }) {

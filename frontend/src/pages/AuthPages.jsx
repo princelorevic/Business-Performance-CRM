@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../api/AuthContext.jsx';
 import { useForm } from '../hooks/useForm.js';
-import { TextField } from '../components/ui/Field.jsx';
+import { TextField, PasswordField } from '../components/ui/Field.jsx';
 import { Alert } from '../components/ui/Feedback.jsx';
 import { ThemeToggle } from '../theme/ThemeToggle.jsx';
 import { Icon } from '../components/ui/Icon.jsx';
@@ -10,7 +10,10 @@ import { Icon } from '../components/ui/Icon.jsx';
 function Shell({ title, subtitle, children, footer }) {
   return (
     <div className="flex min-h-screen flex-col">
-      <div className="flex justify-end p-4"><ThemeToggle /></div>
+      <div className="flex items-center justify-between p-4">
+        <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-text"><Icon name="chevronLeft" className="h-4 w-4" /> Back to home</Link>
+        <ThemeToggle />
+      </div>
       <div className="flex flex-1 items-center justify-center px-4 pb-16">
         <div className="w-full max-w-md">
           <div className="mb-6 flex flex-col items-center text-center">
@@ -29,15 +32,15 @@ function Shell({ title, subtitle, children, footer }) {
 export function LoginPage() {
   const { session, login } = useAuth();
   const navigate = useNavigate();
-  const from = useLocation().state?.from ?? '/';
+  const from = useLocation().state?.from ?? '/dashboard';
   const form = useForm({ email: '', password: '' }, async (v) => { await login(v.email, v.password); navigate(from, { replace: true }); });
-  if (session) return <Navigate to="/" replace />;
+  if (session) return <Navigate to="/dashboard" replace />;
   return (
     <Shell title="Welcome back" subtitle="Sign in to your company workspace" footer={<>New company? <Link className="text-accent hover:underline" to="/register">Create a workspace</Link></>}>
       <form onSubmit={form.submit} className="space-y-4" noValidate>
         {form.formError && <Alert tone="danger">{form.formError}</Alert>}
         <TextField label="Email" type="email" autoComplete="email" value={form.values.email} onChange={form.set('email')} error={form.errors.email} required />
-        <TextField label="Password" type="password" autoComplete="current-password" value={form.values.password} onChange={form.set('password')} error={form.errors.password} required />
+        <PasswordField label="Password" autoComplete="current-password" value={form.values.password} onChange={form.set('password')} error={form.errors.password} required />
         <button className="btn-primary w-full" disabled={form.busy}>{form.busy ? 'Signing in…' : 'Sign in'}</button>
       </form>
     </Shell>
@@ -49,8 +52,8 @@ export function RegisterPage() {
   const navigate = useNavigate();
   const [tz] = useState(() => Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC');
   const form = useForm({ companyName: '', fullName: '', email: '', password: '', currency: 'USD' },
-    async (v) => { await register({ ...v, timezone: tz }); navigate('/', { replace: true }); });
-  if (session) return <Navigate to="/" replace />;
+    async (v) => { await register({ ...v, timezone: tz }); navigate('/dashboard', { replace: true }); });
+  if (session) return <Navigate to="/dashboard" replace />;
   return (
     <Shell title="Create your workspace" subtitle="Start a 14-day trial. You become the CEO/COO account owner." footer={<>Already have an account? <Link className="text-accent hover:underline" to="/login">Sign in</Link></>}>
       <form onSubmit={form.submit} className="space-y-4" noValidate>
@@ -58,7 +61,7 @@ export function RegisterPage() {
         <TextField label="Company name" value={form.values.companyName} onChange={form.set('companyName')} error={form.errors.companyName} required />
         <TextField label="Your name" autoComplete="name" value={form.values.fullName} onChange={form.set('fullName')} error={form.errors.fullName} required />
         <TextField label="Work email" type="email" autoComplete="email" value={form.values.email} onChange={form.set('email')} error={form.errors.email} required />
-        <TextField label="Password" type="password" autoComplete="new-password" value={form.values.password} onChange={form.set('password')} error={form.errors.password} hint="At least 10 characters, with letters and numbers." required />
+        <PasswordField label="Password" autoComplete="new-password" value={form.values.password} onChange={form.set('password')} error={form.errors.password} hint="At least 10 characters, with letters and numbers." required />
         <TextField label="Currency (ISO code)" maxLength={3} value={form.values.currency} onChange={(e) => form.set('currency')(e.target.value.toUpperCase())} error={form.errors.currency} />
         <button className="btn-primary w-full" disabled={form.busy}>{form.busy ? 'Creating…' : 'Create workspace'}</button>
       </form>

@@ -1,6 +1,6 @@
 // Navigation is filtered by permission for UX only; the API enforces access independently.
 export const NAV = [
-  { to: '/', label: 'Dashboard', icon: 'dashboard', perm: 'dashboard:read', end: true },
+  { to: '/dashboard', label: 'Dashboard', icon: 'dashboard', perm: 'dashboard:read', end: true },
   { to: '/customers', label: 'Customers', icon: 'users', perm: 'customers:read' },
   { to: '/leads', label: 'Leads', icon: 'funnel', perm: 'leads:read' },
   { to: '/pipeline', label: 'Pipeline', icon: 'target', perm: 'opportunities:read' },
